@@ -46,7 +46,10 @@ const [ipDetails, setIpDetails] = useState<any>(null);
       <div>
         <Result ipAddress={ipAddress} ipDetails={ipDetails}/>
       </div>
-      <OpenLayersMap />
+      <OpenLayersMap 
+      latitude={ipDetails?.location.lat || null} // Get latitude from ipDetails
+      longitude={ipDetails?.location.lng || null} // Get longitude from ipDetails
+      />
     </div>
   );
 }

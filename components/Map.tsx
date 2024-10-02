@@ -13,7 +13,13 @@ import VectorLayer from 'ol/layer/Vector';
 import VectorSource from 'ol/source/Vector';
 import { Style, Icon } from 'ol/style';
 
-const OpenLayersMap = () => {
+// Define the props interface for the OpenLayersMap component
+interface OpenLayersMapProps {
+  latitude: number | null;  // Latitude of the IP address location
+  longitude: number | null; // Longitude of the IP address location
+}
+
+const OpenLayersMap: React.FC<OpenLayersMapProps> = ({ latitude, longitude }) => {
   useEffect(() => {
     // Create a vector source for markers
     const vectorSource = new VectorSource();
@@ -33,32 +39,34 @@ const OpenLayersMap = () => {
         vectorLayer, // Add the vector layer here
       ],
       view: new View({
-        center: fromLonLat([-74.5, 40]), // Center of the map [longitude, latitude]
-        zoom: 9, // Initial zoom level
+        center: fromLonLat([longitude !== null ? longitude : -74.5, latitude !== null ? latitude : 40]), // Center of the map [longitude, latitude]
+        zoom: 13, // Initial zoom level
       }),
     });
 
-    // Create a marker
-    const marker = new Feature({
-      geometry: new Point(fromLonLat([-74.5, 40])), // Coordinates of the marker
-    });
+    // Create a marker if latitude and longitude are available
+    if (latitude !== null && longitude !== null) {
+      const marker = new Feature({
+        geometry: new Point(fromLonLat([longitude, latitude])), // Coordinates of the marker
+      });
 
-    // Style for the marker
-    marker.setStyle(
-      new Style({
-        image: new Icon({
-          anchor: [0.5, 1],
-          src: 'https://openlayers.org/en/latest/examples/data/icon.png', // URL for the marker icon
-        }),
-      })
-    );
+      // Style for the marker
+      marker.setStyle(
+        new Style({
+          image: new Icon({
+            anchor: [0.5, 0.5],
+            src: 'https://openlayers.org/en/latest/examples/data/icon.png', // URL for the marker icon
+          }),
+        })
+      );
 
-    // Add the marker to the vector source
-    vectorSource.addFeature(marker);
+      // Add the marker to the vector source
+      vectorSource.addFeature(marker);
+    }
 
     // Clean up the map when the component is unmounted
     return () => map.setTarget(undefined);
-  }, []);
+  }, [latitude, longitude]); // Re-run effect when latitude or longitude changes
 
   return (
     <div

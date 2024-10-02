@@ -2,10 +2,15 @@
 interface IpDetails{
     query: string;
     ip: string;
-    region: string;
-    timezone: string;
+    location:{
+        region: string;
+        country: string;
+        timezone: string;
+    }
+    
+    
     isp: string;
-    country: string;
+    
 
 }
     export default function Result({ipAddress, ipDetails}: {ipAddress: string, ipDetails: IpDetails}) {
@@ -16,7 +21,7 @@ interface IpDetails{
                         IP ADDRESS
                     </div>
                     <div className="font-bold text-4xl pt-2 text-slate-700">
-                        {ipDetails ? ipDetails.query : ipAddress}
+                        {ipDetails ? ipDetails.ip : "8.8.8.8"}
                     </div>
                 </div>
                 <div className="p-10 border-r border-slate-200 w-1/4 p-4">
@@ -24,7 +29,7 @@ interface IpDetails{
                     Location
                     </div>
                     <div className="font-bold text-4xl pt-2 text-slate-700">
-                        {ipDetails ? `${ipDetails.region}, ${ipDetails.country}` : "N/A"}
+                        {ipDetails ? `${ipDetails.location.region}, ${ipDetails.location.country}` : "California, US"}
                     </div>
                 </div>
                 <div className="p-10 border-r border-slate-200 w-1/4 p-4">
@@ -32,7 +37,7 @@ interface IpDetails{
                     Timezone
                     </div>
                     <div className="font-bold text-4xl pt-2 text-slate-700">
-                        {ipDetails ? ipDetails.timezone : "N/A"}
+                        {ipDetails ? ipDetails.location.timezone : "-07:00"}
                     </div>
                 </div>
                 <div className="p-10 border-r border-slate-200 w-1/4 p-4">
@@ -40,7 +45,7 @@ interface IpDetails{
                     ISP
                     </div>
                     <div className="font-bold text-4xl pt-2 text-slate-700">
-                        {ipDetails ? ipDetails.isp : "N/A"} 
+                        {ipDetails ? ipDetails.isp : "Google LLC"} 
                     </div>
                 </div>
             </div>
