@@ -14,6 +14,8 @@ interface IpDetails{
 
 }
     export default function Result({ipAddress, ipDetails}: {ipAddress: string, ipDetails: IpDetails}) {
+        console.log(ipAddress);
+        
         return (<div className="pl-44">
             <div className="relative block top-20  flex justify-between max-w-6xl rounded-lg  items-center bg-white">
                 <div className="p-10 border-r border-slate-200 w-1/4 p-4">

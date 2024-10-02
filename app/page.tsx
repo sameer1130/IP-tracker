@@ -9,6 +9,18 @@ import { useEffect, useState } from 'react';
 const OpenLayersMap = dynamic(() => import('@/components/Map'), {
   ssr: false,
 });
+interface IpDetails {
+  ip: string;
+  location: {
+    city: string;
+    region: string;
+    country: string;
+    lat: number;
+    lng: number;
+  };
+  isp: string;
+  timezone: string;
+}
 
 
 
