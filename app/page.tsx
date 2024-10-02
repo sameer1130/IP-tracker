@@ -11,22 +11,24 @@ const OpenLayersMap = dynamic(() => import('@/components/Map'), {
 });
 interface IpDetails {
   ip: string;
+  query: string;
   location: {
     city: string;
     region: string;
     country: string;
     lat: number;
     lng: number;
+    timezone: string;
   };
   isp: string;
-  timezone: string;
+  
 }
 
 
 
 export default function Home() {
 const [ipAddress, setIpAddress] = useState("");
-const [ipDetails, setIpDetails] = useState<any>(null);
+const [ipDetails, setIpDetails] = useState<IpDetails | null>(null);
 
 
   const handleSearch = (value: string) =>{
@@ -56,7 +58,9 @@ const [ipDetails, setIpDetails] = useState<any>(null);
         <Ipform onSearch={handleSearch}/>
       </div>
       <div>
-        <Result ipAddress={ipAddress} ipDetails={ipDetails}/>
+        {ipDetails && (
+          <Result ipAddress={ipAddress} ipDetails={ipDetails} /> // Only render when ipDetails is available
+        )}
       </div>
       <OpenLayersMap 
       latitude={ipDetails?.location.lat || null} // Get latitude from ipDetails

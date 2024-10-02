@@ -13,6 +13,7 @@ export async function GET(request : Request){
         return NextResponse.json(data);
 
     }catch(error){
+        console.error("Error fetching IP details:", error);
         return NextResponse.json(
             {
                 error: "Failed to fetch the data from the API"
